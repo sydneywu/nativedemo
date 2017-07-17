@@ -3,7 +3,10 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware, combineReducers, compose} from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import {createLogger} from 'redux-logger';
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -11,8 +14,12 @@ import {
   Text,
   View
 } from 'react-native';
+import AppContainer from './app/containers/AppContainer'
+import configureStore from './app/configureStore'
+const loggerMiddleware = createLogger({ predicate: (getState, action) => __DEV__});
 
-export default class nativedemo extends Component {
+/*
+export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -30,6 +37,15 @@ export default class nativedemo extends Component {
     );
   }
 }
+*/
+
+const store = configureStore();
+
+const App = ()=>(
+  <Provider store = {store}>
+    <AppContainer />
+  </Provider>
+)
 
 const styles = StyleSheet.create({
   container: {
@@ -50,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('nativedemo', () => nativedemo);
+AppRegistry.registerComponent('nativedemo', () => App);
