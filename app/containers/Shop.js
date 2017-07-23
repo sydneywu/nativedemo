@@ -72,10 +72,9 @@ class Shop extends Component {
             }}>
               <Text style={styles.smallTitle}> {shop[0].name} </Text>
               <Image 
-                source={{uri: 'http://192.168.0.33:3000/images/adidas.jpg'}} 
+                source={{uri: config.serverURL+'/images/' + shop[0].featured_image}} 
                 style={{width: 300, height: 300}}
               />
-              <Text style={styles.normalFont}> Value: ${people[0].coupon[0].value}  </Text>
               <Text> Address: {shop[0].address} </Text>
             </View>
           ) : null
@@ -96,10 +95,9 @@ class Shop extends Component {
             }}>
               <Text style={styles.smallTitle}> {shop[0].name} </Text>
               <Image 
-                source={{uri: 'http://192.168.0.33:3000/images/adidas.jpg'}} 
+                source={{uri: config.serverURL+'/images/' + shop[0].featured_image}} 
                 style={{width: 300, height: 300}}
               />
-              <Text style={styles.normalFont}> Value: ${people[0].coupon[0].value}  </Text>
               <Text> Addrses: {shop[0].address} </Text>
             </View>
           ) : null

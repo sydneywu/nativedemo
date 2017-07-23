@@ -3,7 +3,10 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-
+import {Provider} from 'react-redux';
+import {createStore, applyMiddleware, combineReducers, compose} from 'redux';
+import thunkMiddleware from 'redux-thunk';
+import {createLogger} from 'redux-logger';
 import React, { Component } from 'react';
 import {
   AppRegistry,
@@ -11,8 +14,12 @@ import {
   Text,
   View
 } from 'react-native';
+import AppContainer from './app/containers/AppContainer'
+import configureStore from './app/configureStore'
+const loggerMiddleware = createLogger({ predicate: (getState, action) => __DEV__});
 
-export default class nativedemo extends Component {
+/*
+export default class App extends Component {
   render() {
     return (
       <View style={styles.container}>
@@ -20,16 +27,25 @@ export default class nativedemo extends Component {
           Welcome to React Native!
         </Text>
         <Text style={styles.instructions}>
-          To get started, edit index.ios.js
+          To get started, edit index.android.js
         </Text>
         <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
+          Double tap R on your keyboard to reload,{'\n'}
+          Shake or press menu button for dev menu
         </Text>
       </View>
     );
   }
 }
+*/
+
+const store = configureStore();
+
+const App = ()=>(
+  <Provider store = {store}>
+    <AppContainer />
+  </Provider>
+)
 
 const styles = StyleSheet.create({
   container: {
@@ -50,4 +66,4 @@ const styles = StyleSheet.create({
   },
 });
 
-AppRegistry.registerComponent('nativedemo', () => nativedemo);
+AppRegistry.registerComponent('nativedemo', () => App);
