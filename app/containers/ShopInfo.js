@@ -20,7 +20,7 @@ import config from '../../config/config'
 
 let styles
 
-class Profile extends Component {
+class ShopInfo extends Component {
  
   componentDidMount(){
     console.log('calling componentDidMount')
@@ -55,9 +55,18 @@ class Profile extends Component {
       this.attachAsyncStorageAndFetch()
     }
 
+    let thisShop = shop.find(x=> {
+      console.log(x.slug);
+      return x.slug == this.props.navigation.state.params.shop
+    })
+
+    console.log("this.props.navigation.state.params", this.props.navigation.state.params)
+    console.log("++++++", shop)
+    console.log("===========", thisShop)
+
     return (
       <ScrollView>
-        <Text style={styles.title}> Current Points </Text>
+        <Text style={styles.title}> {thisShop.name} </Text>
         {/*<TouchableHighlight onPress={onUserClick} style={styles.button}>
           <Text style={styles.buttonText}>Get Profile!</Text>
         </TouchableHighlight>*/}
@@ -65,6 +74,23 @@ class Profile extends Component {
           isFetching && <Text>Loading</Text>
         }
         {
+          <View style={styles.shopContainer}>
+
+            <Text>{JSON.stringify(shop)}</Text>
+            <Image 
+              source={{uri: config.serverURL+'/images/' + shop[0].featured_image}} 
+              style={styles.shopFeaturedImage}
+            />
+            <Text> Address: </Text>            
+            <Text> {thisShop.address} </Text>    
+            <Image 
+              source={{uri: config.serverURL+'/images/' + thisShop.featured_image}} 
+          
+            />        
+          </View>
+        }
+        {
+
           shop.length ? (
             <View style={{    
               justifyContent: 'center',
@@ -77,53 +103,13 @@ class Profile extends Component {
                   source={{uri: config.serverURL+'/images/' + shop[0].featured_image}} 
                   style={{width: 300, height: 300}}
                 />
-                <Button 
-                  onPress={() => navigate('Chat')}
-                  title="More"
-                />
                 <Text style={styles.normalFont}> Value: ${people[0].coupon[0].value}  </Text>
                 <Text> Address: {shop[0].address} </Text>
-              <TouchableHighlight 
-                style={styles.touchableShops} 
-                onPress={() => navigate('ShopInfo', {shop: shop[0].slug})}
-              >
-                <View style={styles.highlightView}>
-                  <Text> Press me </Text>
-                  <Text> Press me </Text>
-                  <Image 
-                    source={{uri: config.serverURL+'/images/' + shop[0].featured_image}} 
-                    style={{width: 300, height: 300}}
-                  />
-                </View>
-              </TouchableHighlight>
 
             </View>
           ) : null
         }
 
-        <View
-          style={{
-            borderBottomColor: 'grey',
-            borderBottomWidth: 1,
-          }}
-        />
-
-        {
-          shop.length ? (
-            <View style={{    
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-              <Text style={styles.smallTitle}> {shop[0].name} </Text>
-              <Image 
-                            source={{uri: config.serverURL+'/images/' + shop[0].featured_image}} 
-                style={{width: 300, height: 300}}
-              />
-              <Text style={styles.normalFont}> Value: ${people[0].coupon[0].value}  </Text>
-              <Text> Addrses: {shop[0].address} </Text>
-            </View>
-          ) : null
-        }
 
       </ScrollView>   
     )
@@ -171,16 +157,21 @@ styles = StyleSheet.create({
     alignSelf: 'stretch',
     justifyContent: 'center'
   },
-  button: {
-    height: 300,
-    backgroundColor: '#48BBEC',
-    borderColor: '#48BBEC',
-    borderWidth: 1,
-    borderRadius: 8,
+  shopContainer:{
+    justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: 10,
-    alignSelf: 'stretch',
-    justifyContent: 'center'
   },
+  shopFeaturedImage:{
+    width: 300, 
+    height: 300
+  }
+});
+
+ShopInfo.navigationOptions = ({navigation})=>({
+  title: `Shopping ${navigation.state.params.shop}`,
+  headerTintColor: 'green',
+  headerLeft: null,
 });
 
 function mapDispatchToProps(dispatch){
@@ -202,4 +193,4 @@ function mapStateToProps (state){
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps, mapDispatchToProps)(ShopInfo);

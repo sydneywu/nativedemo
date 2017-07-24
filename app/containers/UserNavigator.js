@@ -20,6 +20,7 @@ import Shop from './Shop'
 import TestComponent from './TestComponent'
 import Profile from './Profile'
 
+/*
 class HomeScreen extends React.Component {
   static navigationOptions = {
     title: 'Welcome',
@@ -83,7 +84,7 @@ class AllContactsScreen extends React.Component {
     )
   }
 }
-
+*/
 const UserNavigator = TabNavigator({
   Profile: { screen: Profile },
   Shops: { screen: Shop },
@@ -91,7 +92,9 @@ const UserNavigator = TabNavigator({
 });
 
 UserNavigator.navigationOptions = {
-  //title: 'My Screen',
+  title: 'My Screen',
+  headerTintColor: 'green',
+  headerLeft: null,
 }
 
 function mapStateToProps(state){

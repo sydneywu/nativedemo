@@ -4,7 +4,9 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+        "android": "npm run install && npm run start",
+    "clean": "watchman watch-del-all && npm cache clean && cd android && ./gradlew clean && cd .."
   },
   "dependencies": {
     "react": "16.0.0-alpha.12",

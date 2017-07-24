@@ -17,12 +17,17 @@ var {
 import UserNavigator from './UserNavigator';
 import Login from './Login';
 import Test from './Test';
+import TestComponent from './TestComponent';
+import ShopInfo from './ShopInfo';
 
 
 //////////// Main Navigator /////////////
 const Home = StackNavigator({
-  Home: {screen: Login},
+  //Home: {screen: Login},
+  Home: {screen: UserNavigator},
   UserNavigator: {screen: UserNavigator},
+  Chat: {screen: Test},
+  ShopInfo: {screen: ShopInfo}
 })
 
 /*
