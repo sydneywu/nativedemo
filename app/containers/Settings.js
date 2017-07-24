@@ -13,7 +13,7 @@ const {
   TouchableHighlight,
   StyleSheet,
   Button,
-  Alert,
+  Switch,
 } = ReactNative
 import {StackNavigator} from 'react-navigation'
 import {fetchUser, fetchPeopleFromAPI, fetchPeopleAndShop} from '../actions'
@@ -34,11 +34,11 @@ class ShopInfo extends Component {
     return value
   }
 
-  showAlert(){
-      Alert.alert(
-         'The Vendor has not enabled this feature yet'
-      )    
-  }
+   state = {
+      switchValue: false
+   }
+
+   toggleSwitch = (value) => this.setState({ switchValue: value })
 
   attachAsyncStorageAndFetch(){
     //console.log('ojafpojsdpfojsapfoj')
@@ -56,20 +56,8 @@ class ShopInfo extends Component {
     //console.log('================ start render', this.props)
     const {dispatch, people, shop, isFetching, initialMessage} = this.props.people;
     const onUserClick = ()=>{
-
-      console.log("xoxoxoxoxo people is ", people);
-      //this.props.fetchPeopleAndShop()
       this.attachAsyncStorageAndFetch()
     }
-
-    let thisShop = shop.find(x=> {
-      console.log(x.slug);
-      return x.slug == this.props.navigation.state.params.shop
-    })
-
-    let thisCoupon = people[0].coupon.find(x=>{
-      return x.shop == this.props.navigation.state.params.shop
-    })
 
     //console.log("this.props.navigation.state.params", this.props.navigation.state.params)
     //console.log("++++++", thisCoupon)
@@ -78,82 +66,46 @@ class ShopInfo extends Component {
 
     return (
       <ScrollView>
-        <Text style={styles.title}> {thisShop.name} </Text>
-        <Text style={styles.normalFont}> Credit: {thisCoupon.value.formatMoney(2)}</Text>  
-        {/*<TouchableHighlight onPress={onUserClick} style={styles.button}>
-          <Text style={styles.buttonText}>Get Profile!</Text>
-        </TouchableHighlight>*/}
-        {
-          isFetching && <Text>Loading</Text>
-        }
-        {
-          <View style={styles.shopContainer}>
-            <Image 
-              source={{uri: config.serverURL+'/images/' + thisShop.featured_image}} 
-              style={styles.shopFeaturedImage}
+      { people.length ? (
+          <View>
+           
+            <View style={styles.textContainer}>
+              <Text style={styles.normalFont}>Name</Text>
+              <Text style={styles.normalFont}>{people[0].email} </Text>
+            </View>
+            <View style={styles.greyLine}/>   
+
+            <View style={styles.textContainer}>
+              <Text style={styles.normalFont}>Email</Text>
+              <Text style={styles.normalFont}>{people[0].email} </Text>
+            </View>
+            <View style={styles.greyLine}/>           
+
+            <View style={styles.textContainer}>
+              <Text style={styles.normalFont}>Role</Text>
+              <Text style={styles.normalFont}>{people[0].role} </Text>
+            </View>
+            <View style={styles.greyLine}/>
+
+            <View style={styles.textContainer}>
+              <Text style={styles.normalFont}>Notification</Text>
+               <Switch style={styles.normalSwitch} onValueChange = {this.toggleSwitch} value = {this.state.switchValue}/>
+            </View>
+            <View style={styles.greyLine}/>
+
+            <View style={{marginTop: 50}} />
+           
+            <Button
+              style={{marginTop: 30}}
+              onPress={() => navigate('Home')}
+              title="Log Out"
             />
-           <Text style={styles.normalFontLeft}> {thisShop.description} </Text>          
-           <Text style={styles.normalBoldFont}> Address: </Text>          
-           <Text style={styles.normalFont}> {thisShop.address} </Text>          
-           <Text style={styles.normalBoldFont}> Phone No: </Text>          
-           <Text style={styles.normalFont}> {thisShop.phone} </Text>                             
-          
-          </View>
 
-        }
+  
 
-        <View style={{marginTop: 5}} />
-        <Button
-          onPress={this.showAlert}
-          title="Make Appointment"
-        />
-
-        <View style={{marginTop: 5}} />
-        <Button
-          onPress={this.showAlert}
-          title="Chat"
-        />
-
-        <View style={{marginTop: 5}} />
-        <View
-          style={{
-            borderBottomColor: 'grey',
-            borderBottomWidth: 1,
-            marginBottom: 10,
-          }}
-        />
-
-        {
-          <View style={styles.shopContainer}>
-            <Text style={styles.title}> Promotions </Text>
-          </View>
-        }
-
-        {
-            thisShop.promotions.map((promotion, index)=>(
-
-              <View style={{    
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginBottom: 10,
-                }}
-                key={promotion.name}
-              >
-                
-                  <Text style={styles.smallTitle}> {promotion.name} </Text>
-                  <Image 
-                    source={{uri: config.serverURL+'/images/' + promotion.featured_image}} 
-                    style={styles.promoImage}
-                  />
-                  <Text style={styles.normalFont}> {promotion.description} </Text>
-
-
-              </View>
-              )
-            
-            )
-
-        }
+          </View> 
+        ): null
+      }
 
 
       </ScrollView>   
@@ -162,42 +114,84 @@ class ShopInfo extends Component {
 }
 
 styles = StyleSheet.create({
+
   container: {
     justifyContent: 'center',
     marginTop: 50,
     padding: 20,
     backgroundColor: '#ffffff',
   },
+  buttonText: {
+    fontSize: 18,
+    color: 'white',
+    alignSelf: 'center'
+  },
+  buttonTouch: {
+    height: 36,
+    backgroundColor: '#48BBEC',
+    borderColor: '#48BBEC',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
+  },
+  normalButton: {
+    height: 300,
+    backgroundColor: '#48BBEC',
+    borderColor: '#48BBEC',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    alignSelf: 'stretch',
+    justifyContent: 'center'
+  },
+
+  normalSwitch: {
+    marginLeft: 50,
+  },
+
+  textContainer: {
+    flexDirection:'row', 
+    flexWrap:'wrap'
+  },
+  greyLine: {
+    borderBottomColor: 'grey',
+    borderBottomWidth: 1,
+  },
+
   title: {
     fontSize: 30,
     alignSelf: 'center',
   },  
+
   smallTitle: {
     fontSize: 22,
     alignSelf: 'center',
     marginBottom: 5
   },
+
   normalFont: {
-    fontSize: 14,
-    alignSelf: 'center',
-    marginBottom: 5
+    fontSize: 18,
+    alignSelf: 'baseline',
+    marginBottom: 10,
+    marginTop: 10,
+    marginLeft: 50
   },
+
   normalBoldFont: {
     fontSize: 14,
     alignSelf: 'center',
     marginBottom: 5,
     fontWeight: 'bold',
   },
+
   normalFontLeft: {
     fontSize: 14,
     justifyContent: 'flex-start',
     marginBottom: 5
   },
-  buttonText: {
-    fontSize: 18,
-    color: 'white',
-    alignSelf: 'center'
-  },
+
   highlightView: {
     justifyContent: 'center',
     alignItems: 'center',

@@ -4,6 +4,9 @@ import {connect} from 'react-redux';
 import {ActionCreators} from '../actions';
 import {bindActionCreators} from 'redux';
 import Home from './Home';
+var helper = require('../../config/helper.js');
+
+console.log('oooooooooooooooooooo');
 
 import {
   TouchableHighlight,

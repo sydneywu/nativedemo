@@ -162,15 +162,15 @@ var Login = React.createClass({
           />
         </View>  
         <View style={styles.row}>
-          <TouchableHighlight style={styles.button} onPress={this._userSignup} underlayColor='#99d9f4'>
+          {/*<TouchableHighlight style={styles.button} onPress={this._userSignup} underlayColor='#99d9f4'>
             <Text style={styles.buttonText}>Signup</Text>
-          </TouchableHighlight>
+          </TouchableHighlight>*/}
           <TouchableHighlight style={styles.button} onPress={this._userLogin} underlayColor='#99d9f4'>
             <Text style={styles.buttonText}>Login</Text>
           </TouchableHighlight>
-          <TouchableHighlight style={styles.button} onPress={this._userLogout} underlayColor='#99d9f4'>
+          {/*<TouchableHighlight style={styles.button} onPress={this._userLogout} underlayColor='#99d9f4'>
             <Text style={styles.buttonText}>Logout</Text>
-          </TouchableHighlight>
+          </TouchableHighlight>*/}
         </View>
         {/*<View style={styles.row}>    
           <TouchableHighlight onPress={this._getProtectedQuote} style={styles.button}>

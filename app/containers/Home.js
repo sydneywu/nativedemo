@@ -23,8 +23,9 @@ import ShopInfo from './ShopInfo';
 
 //////////// Main Navigator /////////////
 const Home = StackNavigator({
-  //Home: {screen: Login},
-  Home: {screen: UserNavigator},
+  Home: {screen: Login},
+  //Home: {screen: UserNavigator},
+  Login: {screen: Login},
   UserNavigator: {screen: UserNavigator},
   Chat: {screen: Test},
   ShopInfo: {screen: ShopInfo}

@@ -18,10 +18,10 @@ import {StackNavigator} from 'react-navigation'
 import {fetchUser, fetchPeopleFromAPI, fetchPeopleAndShop} from '../actions'
 import config from '../../config/config'
 
+let styles
 
-class Shop extends Component {
+class Profile extends Component {
  
-
   componentDidMount(){
     console.log('calling componentDidMount')
     //this.props.fetchUser()
@@ -39,68 +39,68 @@ class Shop extends Component {
     token.then((data)=>{
       //console.log("======== token", data);
       this.props.fetchPeopleAndShop(data);
-    })
-
-    
+    })    
   }
+
   
   render(){
+    const { navigate } = this.props.navigation;
     //console.log('================ start render', this.props)
     const {dispatch, people, shop, isFetching, initialMessage} = this.props.people;
     const onUserClick = ()=>{
 
-      console.log("xoxoxoxoxo people is ", people);
+      console.log("xoxoxoxoxo people is ", shop);
       //this.props.fetchPeopleAndShop()
       this.attachAsyncStorageAndFetch()
     }
 
+
     return (
       <ScrollView>
-        <Text style={styles.title}> All Participating Shops </Text>
+
+        <Text style={styles.title} > All Participating Shops </Text>
         {/*<TouchableHighlight onPress={onUserClick} style={styles.button}>
           <Text style={styles.buttonText}>Get Profile!</Text>
         </TouchableHighlight>*/}
         {
           isFetching && <Text>Loading</Text>
         }
-        {
-          shop.length ? (
-            <View style={{    
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginBottom: 10,
-            }}>
-              <Text style={styles.smallTitle}> {shop[0].name} </Text>
-              <Image 
-                source={{uri: config.serverURL+'/images/' + shop[0].featured_image}} 
-                style={{width: 300, height: 300}}
-              />
-              <Text> Address: {shop[0].address} </Text>
-            </View>
-          ) : null
-        }
-
-        <View
-          style={{
-            borderBottomColor: 'grey',
-            borderBottomWidth: 1,
-          }}
-        />
 
         {
-          shop.length ? (
+          shop.map((thisShop, index)=> (
             <View style={{    
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-              <Text style={styles.smallTitle}> {shop[0].name} </Text>
-              <Image 
-                source={{uri: config.serverURL+'/images/' + shop[0].featured_image}} 
-                style={{width: 300, height: 300}}
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: 10, 
+              }}
+              key={index}
+            >
+                        
+              <TouchableHighlight 
+                style={styles.touchableShops} 
+                onPress={() => {}}
+              >
+                <View style={styles.highlightView}>
+                  <Text style={styles.smallTitle}> {thisShop.name} </Text>
+                  <Image 
+                    source={{uri: config.serverURL+'/images/' + thisShop.featured_image}} 
+                    style={{width: 300, height: 300}}
+                  />
+                  <Text style={styles.normalFont}> {thisShop.address} </Text>
+                </View>
+              </TouchableHighlight>
+
+
+              <View
+                style={{
+                  borderBottomColor: 'grey',
+                  borderBottomWidth: 1,
+                }}
               />
-              <Text> Addrses: {shop[0].address} </Text>
+
             </View>
-          ) : null
+
+          )) 
         }
 
       </ScrollView>   
@@ -108,7 +108,7 @@ class Shop extends Component {
   }
 }
 
-const styles = StyleSheet.create({
+styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     marginTop: 50,
@@ -135,8 +135,23 @@ const styles = StyleSheet.create({
     color: 'white',
     alignSelf: 'center'
   },
+  highlightView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  touchableShops: {
+
+    backgroundColor: '#e9e9ef',
+    borderColor: '#e9e9ef',
+    borderWidth: 1,
+    borderRadius: 8,
+    marginBottom: 10,
+    alignSelf: 'stretch',
+    justifyContent: 'center',
+
+  },
   button: {
-    height: 36,
+    height: 300,
     backgroundColor: '#48BBEC',
     borderColor: '#48BBEC',
     borderWidth: 1,
@@ -145,6 +160,12 @@ const styles = StyleSheet.create({
     alignSelf: 'stretch',
     justifyContent: 'center'
   },
+});
+
+Profile.navigationOptions = ({navigation})=>({
+  //title: `Shopping ${navigation.state.params.shop}`,
+  headerTintColor: 'green',
+  //headerLeft: null,
 });
 
 function mapDispatchToProps(dispatch){
@@ -166,4 +187,4 @@ function mapStateToProps (state){
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(Shop);
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

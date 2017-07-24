@@ -19,6 +19,7 @@ import {StackNavigator, TabNavigator} from 'react-navigation'
 import Shop from './Shop'
 import TestComponent from './TestComponent'
 import Profile from './Profile'
+import Settings from './Settings'
 
 /*
 class HomeScreen extends React.Component {
@@ -88,12 +89,13 @@ class AllContactsScreen extends React.Component {
 const UserNavigator = TabNavigator({
   Profile: { screen: Profile },
   Shops: { screen: Shop },
-  Settings: {screen: TestComponent},
+  Settings: {screen: Settings},
 });
 
 UserNavigator.navigationOptions = {
-  title: 'My Screen',
-  headerTintColor: 'green',
+  
+  title: 'Booked',
+  headerTintColor: 'black',
   headerLeft: null,
 }
 

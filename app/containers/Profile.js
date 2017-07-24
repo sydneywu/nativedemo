@@ -39,10 +39,9 @@ class Profile extends Component {
     token.then((data)=>{
       //console.log("======== token", data);
       this.props.fetchPeopleAndShop(data);
-    })
-
-    
+    })    
   }
+
   
   render(){
     const { navigate } = this.props.navigation;
@@ -50,79 +49,58 @@ class Profile extends Component {
     const {dispatch, people, shop, isFetching, initialMessage} = this.props.people;
     const onUserClick = ()=>{
 
-      console.log("xoxoxoxoxo people is ", people);
+      console.log("xoxoxoxoxo people is ", shop);
       //this.props.fetchPeopleAndShop()
       this.attachAsyncStorageAndFetch()
     }
 
+
     return (
       <ScrollView>
-        <Text style={styles.title}> Current Points </Text>
+
+        <Text style={styles.title} > Favourite Shops </Text>
         {/*<TouchableHighlight onPress={onUserClick} style={styles.button}>
           <Text style={styles.buttonText}>Get Profile!</Text>
         </TouchableHighlight>*/}
         {
           isFetching && <Text>Loading</Text>
         }
+
         {
-          shop.length ? (
+          shop.map((thisShop, index)=> (
             <View style={{    
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginBottom: 10,
-            }}>
-              
-                <Text style={styles.smallTitle}> {shop[0].name} </Text>
-                <Image 
-                  source={{uri: config.serverURL+'/images/' + shop[0].featured_image}} 
-                  style={{width: 300, height: 300}}
-                />
-                <Button 
-                  onPress={() => navigate('Chat')}
-                  title="More"
-                />
-                <Text style={styles.normalFont}> Value: ${people[0].coupon[0].value}  </Text>
-                <Text> Address: {shop[0].address} </Text>
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginBottom: 10, 
+              }}
+              key={index}
+            >
+                        
               <TouchableHighlight 
                 style={styles.touchableShops} 
-                onPress={() => navigate('ShopInfo', {shop: shop[0].slug})}
+                onPress={() => navigate('ShopInfo', {shop: thisShop.slug})}
               >
                 <View style={styles.highlightView}>
-                  <Text> Press me </Text>
-                  <Text> Press me </Text>
+                  <Text style={styles.smallTitle}> {thisShop.name} </Text>
                   <Image 
-                    source={{uri: config.serverURL+'/images/' + shop[0].featured_image}} 
+                    source={{uri: config.serverURL+'/images/' + thisShop.featured_image}} 
                     style={{width: 300, height: 300}}
                   />
+                  <Text style={styles.normalFont}> {thisShop.address} </Text>
                 </View>
               </TouchableHighlight>
 
-            </View>
-          ) : null
-        }
 
-        <View
-          style={{
-            borderBottomColor: 'grey',
-            borderBottomWidth: 1,
-          }}
-        />
-
-        {
-          shop.length ? (
-            <View style={{    
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}>
-              <Text style={styles.smallTitle}> {shop[0].name} </Text>
-              <Image 
-                            source={{uri: config.serverURL+'/images/' + shop[0].featured_image}} 
-                style={{width: 300, height: 300}}
+              <View
+                style={{
+                  borderBottomColor: 'grey',
+                  borderBottomWidth: 1,
+                }}
               />
-              <Text style={styles.normalFont}> Value: ${people[0].coupon[0].value}  </Text>
-              <Text> Addrses: {shop[0].address} </Text>
+
             </View>
-          ) : null
+
+          )) 
         }
 
       </ScrollView>   
@@ -162,14 +140,15 @@ styles = StyleSheet.create({
     alignItems: 'center',
   },
   touchableShops: {
-    height: 300,
-    backgroundColor: '#fff',
-    borderColor: '#fff',
+
+    backgroundColor: '#e9e9ef',
+    borderColor: '#e9e9ef',
     borderWidth: 1,
     borderRadius: 8,
     marginBottom: 10,
     alignSelf: 'stretch',
-    justifyContent: 'center'
+    justifyContent: 'center',
+
   },
   button: {
     height: 300,
@@ -181,6 +160,12 @@ styles = StyleSheet.create({
     alignSelf: 'stretch',
     justifyContent: 'center'
   },
+});
+
+Profile.navigationOptions = ({navigation})=>({
+  //title: `Shopping ${navigation.state.params.shop}`,
+  headerTintColor: 'green',
+  //headerLeft: null,
 });
 
 function mapDispatchToProps(dispatch){
