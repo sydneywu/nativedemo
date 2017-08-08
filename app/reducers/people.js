@@ -2,6 +2,7 @@ import {combineReducers} from 'redux'
 import {
 	FETCHING_PEOPLE, FETCHING_PEOPLE_SUCCESS, FETCHING_PEOPLE_FAILURE,
 	FETCH_USER, FETCH_PEOPLE_SHOP_SUCCESS, FETCH_PEOPLE_SHOP_FAILURE,
+	USER_LOGGED_IN,
 } from '../actions/constants'
 
 const initialState = {
@@ -10,6 +11,7 @@ const initialState = {
 	isFetching: false,
 	initialMessage: 'hello initialMessage',
 	error: false,
+	isLoggedIn: false,
 }
 
 export default function peopleReducer(state=initialState, action){
@@ -32,7 +34,7 @@ export default function peopleReducer(state=initialState, action){
 				...state,
 				isFetching: false,
 				error: true,
-			}	
+			}
 
 		case FETCH_USER:
 			return{
@@ -42,9 +44,9 @@ export default function peopleReducer(state=initialState, action){
 				error: false,
 				people: ['mona'],
 			}
-		
+
 		case FETCH_PEOPLE_SHOP_SUCCESS:
-			
+
 			return{
 				...state,
 				isFetching: false,
@@ -53,7 +55,7 @@ export default function peopleReducer(state=initialState, action){
 				people: action.data.user,
 				shop: action.data.shop
 			}
-		
+
 		case FETCH_PEOPLE_SHOP_FAILURE:
 			return{
 				...state,
@@ -61,8 +63,14 @@ export default function peopleReducer(state=initialState, action){
 				error: true,
 			}
 
+		case USER_LOGGED_IN:
+			return{
+				...state,
+				userLoggedIn: action.userLoggedIn,
+			}
 
-		default: 
+
+		default:
 			return state
 	}
 }

@@ -33,7 +33,7 @@ const options = {};
 
 var Login = React.createClass({
 
- 
+
   async _onValueChange(item, selectedValue){
     try {
       await AsyncStorage.setItem(item, selectedValue);
@@ -47,7 +47,7 @@ var Login = React.createClass({
 
     var DEMO_TOKEN = await AsyncStorage.getItem(STORAGE_KEY);
     console.log(DEMO_TOKEN);
-   
+
     fetch(serverUrl + "/dashboard", {
       method: "GET",
       headers: {
@@ -64,7 +64,7 @@ var Login = React.createClass({
   _userSignup() {
     var value = this.refs.form.getValue();
     if (value) { //if validation fails, value will be null
-      
+
       fetch(serverUrl + "/register", {
         method: "POST",
         headers: {
@@ -87,23 +87,7 @@ var Login = React.createClass({
     }
   },
 
-  _test(){
-    console.log('calling test');
-    fetch(
-      //"http://www.google.com",
-      "http://192.168.1.11:3000",
-      {
-      method:"GET",
-    })
-    .then((response)=>{
-      console.log(response)
-    })
-    .done()
-    
-  },
-
   _userLogin(){
-  	
     var value = this.refs.form.getValue();
     if (value){ // if validation fails, value will be null
   		console.log('there is value')
@@ -138,6 +122,10 @@ var Login = React.createClass({
     }
   },
 
+  _userSignUp(){
+    this.props.navigation.navigate('Register');
+  },
+
 
   async _userLogout(){
     try{
@@ -152,7 +140,7 @@ var Login = React.createClass({
     return (
       <View style={styles.container}>
         <View style={styles.row}>
-          <Text style={styles.title}>Sign up or Login to start using</Text>
+          <Text style={styles.title}>Booked</Text>
         </View>
         <View style={styles.row}>
           <Form
@@ -160,7 +148,7 @@ var Login = React.createClass({
             type={Person}
             options={options}
           />
-        </View>  
+        </View>
         <View style={styles.row}>
           {/*<TouchableHighlight style={styles.button} onPress={this._userSignup} underlayColor='#99d9f4'>
             <Text style={styles.buttonText}>Signup</Text>
@@ -168,18 +156,22 @@ var Login = React.createClass({
           <TouchableHighlight style={styles.button} onPress={this._userLogin} underlayColor='#99d9f4'>
             <Text style={styles.buttonText}>Login</Text>
           </TouchableHighlight>
+
+          <TouchableHighlight style={styles.button} onPress={this._userSignUp} underlayColor='#99d9f4'>
+            <Text style={styles.buttonText}>Sign Up</Text>
+          </TouchableHighlight>
           {/*<TouchableHighlight style={styles.button} onPress={this._userLogout} underlayColor='#99d9f4'>
             <Text style={styles.buttonText}>Logout</Text>
           </TouchableHighlight>*/}
         </View>
-        {/*<View style={styles.row}>    
+        {/*<View style={styles.row}>
           <TouchableHighlight onPress={this._getProtectedQuote} style={styles.button}>
             <Text style={styles.buttonText}>Get a Chuck Norris Quote!</Text>
           </TouchableHighlight>
         </View>*/}
       </View>
     );
-  }  
+  }
 })
 
 function mapStateToProps(state){

@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
-        "android": "npm run install && npm run start",
+    "android": "npm run install && npm run start",
     "clean": "watchman watch-del-all && npm cache clean && cd android && ./gradlew clean && cd .."
   },
   "dependencies": {
@@ -16,6 +16,7 @@
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
+    "superagent": "^3.5.2",
     "tcomb-form-native": "^0.6.9"
   },
   "devDependencies": {

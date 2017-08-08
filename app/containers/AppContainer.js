@@ -6,8 +6,6 @@ import {bindActionCreators} from 'redux';
 import Home from './Home';
 var helper = require('../../config/helper.js');
 
-console.log('oooooooooooooooooooo');
-
 import {
   TouchableHighlight,
   AppRegistry,

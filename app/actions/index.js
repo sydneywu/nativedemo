@@ -1,11 +1,15 @@
+import request from 'superagent'
 import {
 	FETCHING_PEOPLE, FETCHING_PEOPLE_SUCCESS, FETCHING_PEOPLE_FAILURE,
 	FETCH_USER, FETCH_PEOPLE_SHOP_SUCCESS, FETCH_PEOPLE_SHOP_FAILURE,
+	USER_LOGGED_IN,
 } from './constants'
 import config from '../../config/config'
+import { AsyncStorage} from 'react-native'
 
 const shopEndPoint = '/shop/api/all/'
 const peopleShopEndPoint = '/shop/api/usershop'
+const registerPath = config.serverURL + '/client/api/register'
 
 export function fetchPeopleFromAPI(){
 	return (dispatch)=>{
@@ -30,7 +34,7 @@ export function fetchPeopleAndShop(token){
 		fetch(config.serverURL + peopleShopEndPoint,{
 			method: "GET",
 			headers: {
-        		'Authorization': token,			
+        		'Authorization': token,
 			}
 		})
 		.then(data =>{
@@ -84,4 +88,35 @@ export function fetchUser(){
   return{
     type: 'FETCH_USER'
   }
+}
+
+export function userLoggedIn(boolean){
+	return{
+		type: 'USER_LOGGED_IN',
+		userLoggedIn: boolean
+	}
+}
+
+export function registerUser(formData){
+	return (dispatch)=>{
+		dispatch(getPeople());
+		request.post(registerPath)
+			.set({'Content-Type': 'application/json'})
+			.send(formData)
+			.end((err, res)=>{
+				if(err){
+					console.log("error is ", err)
+					dispatch(getPeopleFailure())
+				} else{
+					var responseText = JSON.parse(res.text)
+					if (!responseText.success){
+						dispatch(getPeopleFailure())
+					} else{
+						AsyncStorage.setItem('id_token', responseText.token)
+						console.log(responseText.token);
+						dispatch(userLoggedIn(true))
+					}
+				}
+			})
+	}
 }

@@ -19,6 +19,7 @@ import Login from './Login';
 import Test from './Test';
 import TestComponent from './TestComponent';
 import ShopInfo from './ShopInfo';
+import Register from './Register';
 
 
 //////////// Main Navigator /////////////
@@ -28,7 +29,8 @@ const Home = StackNavigator({
   Login: {screen: Login},
   UserNavigator: {screen: UserNavigator},
   Chat: {screen: Test},
-  ShopInfo: {screen: ShopInfo}
+  ShopInfo: {screen: ShopInfo},
+  Register: {screen: Register}
 })
 
 /*
