@@ -22,7 +22,7 @@ import config from '../../config/config'
 let styles
 
 class ShopInfo extends Component {
- 
+
   componentDidMount(){
     console.log('calling componentDidMount')
     //this.props.fetchUser()
@@ -37,7 +37,7 @@ class ShopInfo extends Component {
   showAlert(){
       Alert.alert(
          'The Vendor has not enabled this feature yet'
-      )    
+      )
   }
 
   attachAsyncStorageAndFetch(){
@@ -48,9 +48,9 @@ class ShopInfo extends Component {
       this.props.fetchPeopleAndShop(data);
     })
 
-    
+
   }
-  
+
   render(){
     const { navigate } = this.props.navigation;
     //console.log('================ start render', this.props)
@@ -79,7 +79,7 @@ class ShopInfo extends Component {
     return (
       <ScrollView>
         <Text style={styles.title}> {thisShop.name} </Text>
-        <Text style={styles.normalFont}> Credit: {thisCoupon.value.formatMoney(2)}</Text>  
+        <Text style={styles.normalFont}> Credit: {thisCoupon.value.formatMoney(2)}</Text>
         {/*<TouchableHighlight onPress={onUserClick} style={styles.button}>
           <Text style={styles.buttonText}>Get Profile!</Text>
         </TouchableHighlight>*/}
@@ -88,16 +88,16 @@ class ShopInfo extends Component {
         }
         {
           <View style={styles.shopContainer}>
-            <Image 
-              source={{uri: config.serverURL+'/images/' + thisShop.featured_image}} 
+            <Image
+              source={{uri: config.serverURL+'/images/' + thisShop.featured_image}}
               style={styles.shopFeaturedImage}
             />
-           <Text style={styles.normalFontLeft}> {thisShop.description} </Text>          
-           <Text style={styles.normalBoldFont}> Address: </Text>          
-           <Text style={styles.normalFont}> {thisShop.address} </Text>          
-           <Text style={styles.normalBoldFont}> Phone No: </Text>          
-           <Text style={styles.normalFont}> {thisShop.phone} </Text>                             
-          
+           <Text style={styles.normalFontLeft}> {thisShop.description} </Text>
+           <Text style={styles.normalBoldFont}> Address: </Text>
+           <Text style={styles.normalFont}> {thisShop.address} </Text>
+           <Text style={styles.normalBoldFont}> Phone No: </Text>
+           <Text style={styles.normalFont}> {thisShop.phone} </Text>
+
           </View>
 
         }
@@ -132,17 +132,17 @@ class ShopInfo extends Component {
         {
             thisShop.promotions.map((promotion, index)=>(
 
-              <View style={{    
+              <View style={{
                   justifyContent: 'center',
                   alignItems: 'center',
                   marginBottom: 10,
                 }}
                 key={promotion.name}
               >
-                
+
                   <Text style={styles.smallTitle}> {promotion.name} </Text>
-                  <Image 
-                    source={{uri: config.serverURL+'/images/' + promotion.featured_image}} 
+                  <Image
+                    source={{uri: config.serverURL+'/images/' + promotion.featured_image}}
                     style={styles.promoImage}
                   />
                   <Text style={styles.normalFont}> {promotion.description} </Text>
@@ -150,13 +150,13 @@ class ShopInfo extends Component {
 
               </View>
               )
-            
+
             )
 
         }
 
 
-      </ScrollView>   
+      </ScrollView>
     )
   }
 }
@@ -171,7 +171,7 @@ styles = StyleSheet.create({
   title: {
     fontSize: 30,
     alignSelf: 'center',
-  },  
+  },
   smallTitle: {
     fontSize: 22,
     alignSelf: 'center',
@@ -218,7 +218,7 @@ styles = StyleSheet.create({
     marginBottom: 10,
   },
   shopFeaturedImage:{
-    width: 300, 
+    width: 300,
     height: 300,
     marginTop: 10,
     marginBottom: 10
@@ -246,8 +246,8 @@ function mapDispatchToProps(dispatch){
 }
 
 function mapStateToProps (state){
-  console.log('mapStateToProps', state)
-  
+  //console.log('mapStateToProps', state)
+
   const {people, shop} = state
   return {
     people,

@@ -24,6 +24,7 @@ import config from '../../config/config'
 
 let styles
 var Form = t.form.Form;
+let redirected = false;
 
 var Person = t.struct({
   name: t.String,
@@ -43,17 +44,18 @@ var options = {
 class ShopInfo extends Component {
 
   componentDidMount(){
-    console.log('calling componentDidMount')
-    console.log('============', this.props.people)
-    if (this.props.people.userLoggedIn==true){
-      console.log('++++++++++++++++++++++++++++++')
-      console.log('000000000000000000000000000000')
-      console.log('000000000000000000000000000000')
-      console.log('000000000000000000000000000000')
-      console.log('++++++++++++++++++++++++++++++')
-    }
+    console.log('calling componentDidMount from register')
+    redirected=false;
     //this.props.fetchUser()
     //this.attachAsyncStorageAndFetch()
+  }
+
+  componentDidUpdate(){
+    console.log('============', 'componentDidUpdate from register')
+    if (this.props.people.userLoggedIn==true && redirected==false){
+      redirected=true;
+      this.props.navigation.navigate('UserNavigator');
+    }
   }
 
   async _getStorageValue(){
@@ -249,8 +251,6 @@ function mapDispatchToProps(dispatch){
 }
 
 function mapStateToProps (state){
-  console.log('mapStateToProps', state)
-
   const {people, shop} = state
   return {
     people,

@@ -22,7 +22,7 @@ import config from '../../config/config'
 let styles
 
 class ShopInfo extends Component {
- 
+
   componentDidMount(){
     console.log('calling componentDidMount')
     //this.props.fetchUser()
@@ -48,9 +48,9 @@ class ShopInfo extends Component {
       this.props.fetchPeopleAndShop(data);
     })
 
-    
+
   }
-  
+
   render(){
     const { navigate } = this.props.navigation;
     //console.log('================ start render', this.props)
@@ -68,18 +68,18 @@ class ShopInfo extends Component {
       <ScrollView>
       { people.length ? (
           <View>
-           
+
             <View style={styles.textContainer}>
               <Text style={styles.normalFont}>Name</Text>
               <Text style={styles.normalFont}>{people[0].email} </Text>
             </View>
-            <View style={styles.greyLine}/>   
+            <View style={styles.greyLine}/>
 
             <View style={styles.textContainer}>
               <Text style={styles.normalFont}>Email</Text>
               <Text style={styles.normalFont}>{people[0].email} </Text>
             </View>
-            <View style={styles.greyLine}/>           
+            <View style={styles.greyLine}/>
 
             <View style={styles.textContainer}>
               <Text style={styles.normalFont}>Role</Text>
@@ -94,21 +94,21 @@ class ShopInfo extends Component {
             <View style={styles.greyLine}/>
 
             <View style={{marginTop: 50}} />
-           
+
             <Button
               style={{marginTop: 30}}
               onPress={() => navigate('Home')}
               title="Log Out"
             />
 
-  
 
-          </View> 
+
+          </View>
         ): null
       }
 
 
-      </ScrollView>   
+      </ScrollView>
     )
   }
 }
@@ -152,7 +152,7 @@ styles = StyleSheet.create({
   },
 
   textContainer: {
-    flexDirection:'row', 
+    flexDirection:'row',
     flexWrap:'wrap'
   },
   greyLine: {
@@ -163,7 +163,7 @@ styles = StyleSheet.create({
   title: {
     fontSize: 30,
     alignSelf: 'center',
-  },  
+  },
 
   smallTitle: {
     fontSize: 22,
@@ -212,7 +212,7 @@ styles = StyleSheet.create({
     marginBottom: 10,
   },
   shopFeaturedImage:{
-    width: 300, 
+    width: 300,
     height: 300,
     marginTop: 10,
     marginBottom: 10
@@ -240,8 +240,8 @@ function mapDispatchToProps(dispatch){
 }
 
 function mapStateToProps (state){
-  console.log('mapStateToProps', state)
-  
+  //console.log('mapStateToProps', state)
+
   const {people, shop} = state
   return {
     people,

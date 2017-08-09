@@ -21,7 +21,7 @@ import config from '../../config/config'
 let styles
 
 class Profile extends Component {
- 
+
   componentDidMount(){
     console.log('calling componentDidMount')
     //this.props.fetchUser()
@@ -39,10 +39,10 @@ class Profile extends Component {
     token.then((data)=>{
       //console.log("======== token", data);
       this.props.fetchPeopleAndShop(data);
-    })    
+    })
   }
 
-  
+
   render(){
     const { navigate } = this.props.navigation;
     //console.log('================ start render', this.props)
@@ -68,22 +68,22 @@ class Profile extends Component {
 
         {
           shop.map((thisShop, index)=> (
-            <View style={{    
+            <View style={{
                 justifyContent: 'center',
                 alignItems: 'center',
-                marginBottom: 10, 
+                marginBottom: 10,
               }}
               key={index}
             >
-                        
-              <TouchableHighlight 
-                style={styles.touchableShops} 
+
+              <TouchableHighlight
+                style={styles.touchableShops}
                 onPress={() => navigate('ShopInfo', {shop: thisShop.slug})}
               >
                 <View style={styles.highlightView}>
                   <Text style={styles.smallTitle}> {thisShop.name} </Text>
-                  <Image 
-                    source={{uri: config.serverURL+'/images/' + thisShop.featured_image}} 
+                  <Image
+                    source={{uri: config.serverURL+'/images/' + thisShop.featured_image}}
                     style={{width: 300, height: 300}}
                   />
                   <Text style={styles.normalFont}> {thisShop.address} </Text>
@@ -100,10 +100,10 @@ class Profile extends Component {
 
             </View>
 
-          )) 
+          ))
         }
 
-      </ScrollView>   
+      </ScrollView>
     )
   }
 }
@@ -119,7 +119,7 @@ styles = StyleSheet.create({
     fontSize: 30,
     alignSelf: 'center',
     marginBottom: 30
-  },  
+  },
   smallTitle: {
     fontSize: 22,
     alignSelf: 'center',
@@ -177,7 +177,6 @@ function mapDispatchToProps(dispatch){
 }
 
 function mapStateToProps (state){
-  console.log('mapStateToProps', state)
   
   const {people, shop} = state
   return {
