@@ -23,21 +23,21 @@ import Register from './Register';
 
 
 //////////// Main Navigator /////////////
-const Home = StackNavigator({
+const routeConfiguration = {
   Home: {screen: Login},
-  //Home: {screen: UserNavigator},
   Login: {screen: Login},
   UserNavigator: {screen: UserNavigator},
   Chat: {screen: Test},
   ShopInfo: {screen: ShopInfo},
   Register: {screen: Register}
-})
-
-/*
-Home.navigationOptions = {
-  title: 'MyScreen',
-  left: null,
 }
-*/
 
-export default Home;
+const stackNavigatorConfiguration = {
+    initialRouteName: 'Home'
+    //initialRouteName: 'UserNavigator'
+};
+
+
+const StackNavigatorWrapper = StackNavigator(routeConfiguration, stackNavigatorConfiguration);
+
+export default StackNavigatorWrapper;

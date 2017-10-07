@@ -31,7 +31,7 @@
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
                BuildableName = "nativedemo-tvOS.app"
                BlueprintName = "nativedemo-tvOS"
-               ReferencedContainer = "container:nativedemo.xcodeproj">
+               ReferencedContainer = "container:booked.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -45,7 +45,7 @@
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
                BuildableName = "nativedemo-tvOSTests.xctest"
                BlueprintName = "nativedemo-tvOSTests"
-               ReferencedContainer = "container:nativedemo.xcodeproj">
+               ReferencedContainer = "container:booked.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -63,7 +63,7 @@
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
                BuildableName = "nativedemo-tvOSTests.xctest"
                BlueprintName = "nativedemo-tvOSTests"
-               ReferencedContainer = "container:nativedemo.xcodeproj">
+               ReferencedContainer = "container:booked.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -73,7 +73,7 @@
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
             BuildableName = "nativedemo-tvOS.app"
             BlueprintName = "nativedemo-tvOS"
-            ReferencedContainer = "container:nativedemo.xcodeproj">
+            ReferencedContainer = "container:booked.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -96,7 +96,7 @@
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
             BuildableName = "nativedemo-tvOS.app"
             BlueprintName = "nativedemo-tvOS"
-            ReferencedContainer = "container:nativedemo.xcodeproj">
+            ReferencedContainer = "container:booked.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -115,7 +115,7 @@
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
             BuildableName = "nativedemo-tvOS.app"
             BlueprintName = "nativedemo-tvOS"
-            ReferencedContainer = "container:nativedemo.xcodeproj">
+            ReferencedContainer = "container:booked.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

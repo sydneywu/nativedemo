@@ -41,7 +41,7 @@ var options = {
   }
 }
 
-class ShopInfo extends Component {
+class Register extends Component {
 
   componentDidMount(){
     console.log('calling componentDidMount from register')
@@ -58,27 +58,6 @@ class ShopInfo extends Component {
     }
   }
 
-  async _getStorageValue(){
-    var value = await AsyncStorage.getItem('id_token')
-    console.log('===================value is ')
-    return value
-  }
-
-   state = {
-      switchValue: false
-   }
-
-   toggleSwitch = (value) => this.setState({ switchValue: value })
-
-  attachAsyncStorageAndFetch(){
-    //console.log('ojafpojsdpfojsapfoj')
-    var token = this._getStorageValue();
-    token.then((data)=>{
-      //console.log("======== token", data);
-      this.props.fetchPeopleAndShop(data);
-    })
-  }
-
   async _registerUser(){
     var value = this.refs.form.getValue();
     console.log('register value is', value);
@@ -89,9 +68,6 @@ class ShopInfo extends Component {
     const { navigate } = this.props.navigation;
     //console.log('================ start render', this.props)
     const {dispatch, people, shop, isFetching, initialMessage} = this.props.people;
-    const onUserClick = ()=>{
-      this.attachAsyncStorageAndFetch()
-    }
 
     return (
       <View style={styles.container}>
@@ -235,7 +211,7 @@ styles = StyleSheet.create({
   },
 });
 
-ShopInfo.navigationOptions = ({navigation})=>({
+Register.navigationOptions = ({navigation})=>({
   title: 'Sign Up',
   headerTintColor: 'green',
   //headerLeft: null,
@@ -259,4 +235,4 @@ function mapStateToProps (state){
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ShopInfo);
+export default connect(mapStateToProps, mapDispatchToProps)(Register);

@@ -32,18 +32,23 @@ export function fetchPeopleAndShop(token){
 
 	return (dispatch)=>{
 		dispatch(getPeople())
-		request( config.serverURL + peopleShopEndPoint )
-			.set({'Content-Type': 'application/json', 'Authorization': token})
-			.end((err,res)=>{
-				if(err){
-					console.log("error is ", err)
-					dispatch(getPeopleShopFailure(err))
-				} else {
-					console.log("success is ", JSON.parse(res.text))
-					dispatch(getPeopleShopSuccess(JSON.parse(res.text)))
-				}
-			})
-		
+		fetch(config.serverURL + peopleShopEndPoint,{
+			method: "GET",
+			headers: {
+        		'Authorization': token,
+			}
+		})
+		.then(data =>{
+			return data._bodyText
+		})
+		.then(body=>{
+
+			var obj = JSON.parse(body)
+
+			console.log('kkkkkkkkkk user', obj.user)
+			dispatch(getPeopleShopSuccess(obj))
+		})
+		.catch(err=>dispatch(getPeopleShopFailure(err)))
 	}
 }
 

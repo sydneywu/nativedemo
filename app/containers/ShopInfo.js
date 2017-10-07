@@ -3,17 +3,18 @@
 import React, {Component} from 'react'
 import ReactNative from 'react-native'
 import {connect} from 'react-redux'
+
 const {
-  ScrollView,
-  View,
-  TextInput,
-  Text,
-  Image,
-  AsyncStorage,
-  TouchableHighlight,
-  StyleSheet,
-  Button,
-  Alert,
+    ScrollView,
+    View,
+    TextInput,
+    Text,
+    Image,
+    AsyncStorage,
+    TouchableHighlight,
+    StyleSheet,
+    Button,
+    Alert,
 } = ReactNative
 import {StackNavigator} from 'react-navigation'
 import {fetchUser, fetchPeopleFromAPI, fetchPeopleAndShop} from '../actions'
@@ -23,236 +24,241 @@ let styles
 
 class ShopInfo extends Component {
 
-  componentDidMount(){
-    console.log('calling componentDidMount')
-    //this.props.fetchUser()
-    this.attachAsyncStorageAndFetch()
-  }
-
-  async _getStorageValue(){
-    var value = await AsyncStorage.getItem('id_token')
-    return value
-  }
-
-  showAlert(){
-      Alert.alert(
-         'The Vendor has not enabled this feature yet'
-      )
-  }
-
-  attachAsyncStorageAndFetch(){
-    //console.log('ojafpojsdpfojsapfoj')
-    var token = this._getStorageValue();
-    token.then((data)=>{
-      //console.log("======== token", data);
-      this.props.fetchPeopleAndShop(data);
-    })
-
-
-  }
-
-  render(){
-    const { navigate } = this.props.navigation;
-    //console.log('================ start render', this.props)
-    const {dispatch, people, shop, isFetching, initialMessage} = this.props.people;
-    const onUserClick = ()=>{
-
-      console.log("xoxoxoxoxo people is ", people);
-      //this.props.fetchPeopleAndShop()
-      this.attachAsyncStorageAndFetch()
+    componentDidMount() {
+        this.attachAsyncStorageAndFetch()
     }
 
-    let thisShop = shop.find(x=> {
-      console.log(x.slug);
-      return x.slug == this.props.navigation.state.params.shop
-    })
+    async _getStorageValue() {
+        var value = await AsyncStorage.getItem('id_token')
+        return value
+    }
 
-    let thisCoupon = people[0].coupon.find(x=>{
-      return x.shop == this.props.navigation.state.params.shop
-    })
+    showAlert() {
+        Alert.alert(
+            'The Vendor has not enabled this feature yet'
+        )
+    }
 
-    //console.log("this.props.navigation.state.params", this.props.navigation.state.params)
-    //console.log("++++++", thisCoupon)
-    //console.log("===========", thisShop)
-    //console.log("thisShop.promotions", thisShop.promotions)
+    attachAsyncStorageAndFetch() {
+        var token = this._getStorageValue();
+        token.then((data) => {
+            this.props.fetchPeopleAndShop(data);
+        })
 
-    return (
-      <ScrollView>
-        <Text style={styles.title}> {thisShop.name} </Text>
-        <Text style={styles.normalFont}> Credit: {thisCoupon.value.formatMoney(2)}</Text>
-        {/*<TouchableHighlight onPress={onUserClick} style={styles.button}>
-          <Text style={styles.buttonText}>Get Profile!</Text>
-        </TouchableHighlight>*/}
-        {
-          isFetching && <Text>Loading</Text>
-        }
-        {
-          <View style={styles.shopContainer}>
-            <Image
-              source={{uri: config.serverURL+'/images/' + thisShop.featured_image}}
-              style={styles.shopFeaturedImage}
-            />
-           <Text style={styles.normalFontLeft}> {thisShop.description} </Text>
-           <Text style={styles.normalBoldFont}> Address: </Text>
-           <Text style={styles.normalFont}> {thisShop.address} </Text>
-           <Text style={styles.normalBoldFont}> Phone No: </Text>
-           <Text style={styles.normalFont}> {thisShop.phone} </Text>
 
-          </View>
+    }
 
+    render() {
+        const {navigate} = this.props.navigation;
+        const {dispatch, people, shop, isFetching, initialMessage} = this.props.people;
+        const onUserClick = () => {
+            this.attachAsyncStorageAndFetch()
         }
 
-        <View style={{marginTop: 5}} />
-        <Button
-          onPress={this.showAlert}
-          title="Make Appointment"
-        />
+        let thisShop = shop.find(x => {
+            return x.slug == this.props.navigation.state.params.shop
+        })
 
-        <View style={{marginTop: 5}} />
-        <Button
-          onPress={this.showAlert}
-          title="Chat"
-        />
+        let thisCoupon = people[0].coupon.find(x => {
+            return x.shop == this.props.navigation.state.params.shop
+        })
 
-        <View style={{marginTop: 5}} />
-        <View
-          style={{
-            borderBottomColor: 'grey',
-            borderBottomWidth: 1,
-            marginBottom: 10,
-          }}
-        />
+        return (
+            <ScrollView style={styles.container}>
+                <Text style={styles.title}> {thisShop.name} </Text>
+                <Text style={styles.normalFont}> Credit: {thisCoupon.value.formatMoney(2)}</Text>
 
-        {
-          <View style={styles.shopContainer}>
-            <Text style={styles.title}> Promotions </Text>
-          </View>
-        }
+                {
+                    isFetching && <Text>Loading</Text>
+                }
 
-        {
-            thisShop.promotions.map((promotion, index)=>(
+                {
+                    <View style={styles.shopContainer}>
+                        <Image
+                            source={{uri: config.serverURL + '/images/' + thisShop.featured_image}}
+                            style={styles.shopFeaturedImage}
+                        />
+                        <Text style={styles.normalFontLeft}> {thisShop.description} </Text>
+                        <Text style={styles.normalBoldFont}> Address: </Text>
+                        <Text style={styles.normalFont}> {thisShop.address} </Text>
+                        <Text style={styles.normalBoldFont}> Phone No: </Text>
+                        <Text style={styles.normalFont}> {thisShop.phone} </Text>
 
-              <View style={{
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  marginBottom: 10,
-                }}
-                key={promotion.name}
-              >
+                    </View>
 
-                  <Text style={styles.smallTitle}> {promotion.name} </Text>
-                  <Image
-                    source={{uri: config.serverURL+'/images/' + promotion.featured_image}}
-                    style={styles.promoImage}
-                  />
-                  <Text style={styles.normalFont}> {promotion.description} </Text>
+                }
+
+                <View style={styles.shopBtnWrapper}/>
+                <Button
+                    onPress={this.showAlert}
+                    title="Make Appointment"
+                    style={styles.shopBtn}
+                />
+
+                <View style={styles.shopBtnWrapper} />
+                <Button
+                    onPress={this.showAlert}
+                    title="Chat"
+                    style={styles.shopBtn}
+                />
+
+                <View style={{marginTop: 5}}/>
+                <View
+                    style={{
+                        borderBottomColor: 'grey',
+                        borderBottomWidth: 1,
+                        marginBottom: 10,
+                    }}
+                />
+
+                {
+                    <View style={styles.shopContainer}>
+                        <Text style={styles.title}> Promotions </Text>
+                    </View>
+                }
+
+                {
+                    thisShop.promotions.map((promotion, index) => (
+
+                            <View style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                marginBottom: 10,
+                            }}
+                                  key={promotion.name}
+                            >
+
+                                <Text style={styles.smallTitle}> {promotion.name} </Text>
+                                <Image
+                                    source={{uri: config.serverURL + '/images/' + promotion.featured_image}}
+                                    style={styles.promoImage}
+                                />
+                                <Text style={styles.normalFont}> {promotion.description} </Text>
 
 
-              </View>
-              )
+                            </View>
+                        )
+                    )
 
-            )
-
-        }
+                }
 
 
-      </ScrollView>
-    )
-  }
+            </ScrollView>
+        )
+    }
 }
 
 styles = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    marginTop: 50,
-    padding: 20,
-    backgroundColor: '#ffffff',
-  },
-  title: {
-    fontSize: 30,
-    alignSelf: 'center',
-  },
-  smallTitle: {
-    fontSize: 22,
-    alignSelf: 'center',
-    marginBottom: 5
-  },
-  normalFont: {
-    fontSize: 14,
-    alignSelf: 'center',
-    marginBottom: 5
-  },
-  normalBoldFont: {
-    fontSize: 14,
-    alignSelf: 'center',
-    marginBottom: 5,
-    fontWeight: 'bold',
-  },
-  normalFontLeft: {
-    fontSize: 14,
-    justifyContent: 'flex-start',
-    marginBottom: 5
-  },
-  buttonText: {
-    fontSize: 18,
-    color: 'white',
-    alignSelf: 'center'
-  },
-  highlightView: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  touchableShops: {
-    height: 300,
-    backgroundColor: '#fff',
-    borderColor: '#fff',
-    borderWidth: 1,
-    borderRadius: 8,
-    marginBottom: 10,
-    alignSelf: 'stretch',
-    justifyContent: 'center'
-  },
-  shopContainer:{
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 10,
-  },
-  shopFeaturedImage:{
-    width: 300,
-    height: 300,
-    marginTop: 10,
-    marginBottom: 10
-  },
-  promoImage:{
-    //flex: 1,
-    //resizeMode: 'cover',
-    width: 300,
-    height: 150
-  }
+    container: {
+        marginTop: 50,
+        padding: 20,
+        backgroundColor: '#000',
+
+    },
+    title: {
+        fontSize: 30,
+        alignSelf: 'center',
+        color: 'white',
+    },
+    smallTitle: {
+        fontSize: 22,
+        alignSelf: 'center',
+        marginBottom: 5,
+        color: 'white',
+
+    },
+    normalFont: {
+        fontSize: 14,
+        alignSelf: 'center',
+        marginBottom: 5,
+        color: 'white',
+
+    },
+    normalBoldFont: {
+        fontSize: 14,
+        alignSelf: 'center',
+        marginBottom: 5,
+        fontWeight: 'bold',
+        color: 'white',
+
+    },
+    normalFontLeft: {
+        fontSize: 14,
+        justifyContent: 'flex-start',
+        marginBottom: 5,
+        color: 'white',
+
+    },
+    buttonText: {
+        fontSize: 18,
+        color: 'white',
+        alignSelf: 'center',
+        color: 'white',
+
+    },
+    highlightView: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    touchableShops: {
+        height: 300,
+        backgroundColor: '#fff',
+        borderColor: '#fff',
+        borderWidth: 1,
+        borderRadius: 8,
+        marginBottom: 10,
+        alignSelf: 'stretch',
+        justifyContent: 'center'
+    },
+    shopContainer: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginBottom: 10,
+        backgroundColor: '#000',
+    },
+    shopFeaturedImage: {
+        width: 300,
+        height: 300,
+        marginTop: 10,
+        marginBottom: 10
+    },
+    promoImage: {
+        //flex: 1,
+        //resizeMode: 'cover',
+        width: 300,
+        height: 150
+    },
+    shopBtnWrapper:{
+        marginTop:5,
+        backgroundColor: 'black',
+    },
+    shopBtn:{
+        backgroundColor:'black'
+    }
 });
 
-ShopInfo.navigationOptions = ({navigation})=>({
-  //title: `Shopping ${navigation.state.params.shop}`,
-  headerTintColor: 'green',
-  //headerLeft: null,
+ShopInfo.navigationOptions = ({navigation}) => ({
+    //title: `Shopping ${navigation.state.params.shop}`,
+    headerTintColor: 'green',
+    //headerLeft: null,
 });
 
-function mapDispatchToProps(dispatch){
-  return {
-    fetchUser: ()=> dispatch(fetchUser()),
-    getPeople: ()=> dispatch(fetchPeopleFromAPI()),
-    fetchPeopleAndShop: (token) => dispatch(fetchPeopleAndShop(token)),
-  }
+function mapDispatchToProps(dispatch) {
+    return {
+        fetchUser: () => dispatch(fetchUser()),
+        getPeople: () => dispatch(fetchPeopleFromAPI()),
+        fetchPeopleAndShop: (token) => dispatch(fetchPeopleAndShop(token)),
+    }
 }
 
-function mapStateToProps (state){
-  //console.log('mapStateToProps', state)
+function mapStateToProps(state) {
+    //console.log('mapStateToProps', state)
 
-  const {people, shop} = state
-  return {
-    people,
-    shop
-  }
+    const {people, shop} = state
+    return {
+        people,
+        shop
+    }
 }
 
 
